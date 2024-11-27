@@ -1,0 +1,22 @@
+<app-header></app-header>
+<div class="select-category">
+  <div>
+    <span class="font-heading-l-regular">
+      Welcome to the<br /><span class="font-heading-l-bold"
+        >Frontend Quiz!</span
+      >
+    </span>
+    <p class="font-body-s">Pick a subject to get started.</p>
+  </div>
+  <div>
+    <div *ngFor="let category of categories; let i = index">
+      <app-select-category-button
+        [icon]="category.icon"
+        [iconBackground]="category.background"
+        [category]="category"
+      >
+        {{ category.title }}
+      </app-select-category-button>
+    </div>
+  </div>
+</div>

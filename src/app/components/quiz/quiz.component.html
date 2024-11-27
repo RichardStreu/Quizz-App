@@ -1,0 +1,66 @@
+<app-header
+  [title]="category.title"
+  [icon]="category.icon"
+  [background]="category.background"
+></app-header>
+
+<div *ngIf="activeQuestionIndex + 1 > maxQuestionCount; else quizBlock">
+  <app-quiz-summary
+    [category]="category"
+    [correctAnswers]="correctAnswers"
+    [maxAnswers]="maxQuestionCount"
+  ></app-quiz-summary>
+</div>
+
+<ng-template #quizBlock>
+  <div class="quiz">
+    <div>
+      <div>
+        <span class="font-body-s">
+          Question {{ activeQuestionIndex + 1 }} of {{ maxQuestionCount }}
+        </span>
+        <p class="font-heading-m">{{ question }}</p>
+      </div>
+
+      <progress
+        [value]="activeQuestionIndex + 1"
+        [max]="maxQuestionCount"
+      ></progress>
+    </div>
+
+    <div>
+      <div *ngFor="let possibleAnswer of possibleAnswers; let i = index">
+        <app-quiz-button
+          [letter]="getLetterFromIndex(i)"
+          [index]="i"
+          [isSelected]="selectedAnswer === i"
+          [isCorrect]="i === correctAnswerIndex"
+          [answerSubmitted]="answerSubmitted"
+          (answerSelected)="onAnswerSelected(i)"
+        >
+          {{ possibleAnswer }}
+        </app-quiz-button>
+      </div>
+
+      <app-submit-button
+        *ngIf="answerSubmitted; else noAnswerBlock"
+        (onSubmit)="nextQuestion()"
+        >Next Question</app-submit-button
+      >
+
+      <ng-template #noAnswerBlock>
+        <app-submit-button
+          *ngIf="noAnswerSelected; else submitAnswerBlock"
+          (onSubmit)="checkAnswer()"
+          >Please select Answer</app-submit-button
+        >
+      </ng-template>
+
+      <ng-template #submitAnswerBlock>
+        <app-submit-button (onSubmit)="checkAnswer()"
+          >Submit Answer</app-submit-button
+        >
+      </ng-template>
+    </div>
+  </div>
+</ng-template>

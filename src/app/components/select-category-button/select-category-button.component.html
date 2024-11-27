@@ -1,0 +1,6 @@
+<button class="button font-heading-s" (click)="handleClick()">
+  <div class="icon-box" [ngStyle]="{ 'background-color': iconBackground }">
+    <img [src]="icon" />
+  </div>
+  <ng-content></ng-content>
+</button>
